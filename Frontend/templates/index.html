@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hate Speech Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>🛡 Hate Speech Detection</h2>
+    
+    <textarea id="text-input" rows="5" cols="50" placeholder="Enter your text here..."></textarea><br><br>
+    <button id="check-btn">Check</button>
+
+    <h3 id="result"></h3>
+  </div>
+
+  <!-- Load JS -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+ 

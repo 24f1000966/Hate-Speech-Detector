@@ -1,5 +1,6 @@
-nltk
+Flask
 pandas
+numpy
 scikit-learn
+nltk
 joblib
-imblearn
