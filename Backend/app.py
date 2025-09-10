@@ -51,6 +51,6 @@ vectorizer = joblib.load(os.path.join(BASE_DIR, "vectorizer.pkl"))
 # Flask app
 app = Flask(
     __name__,
-    template_folder="../Frontend/templates",
-    static_folder="../Frontend/static"
+    template_folder="templates",
+    static_folder="static"
 )
