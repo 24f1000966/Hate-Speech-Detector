@@ -1,34 +1,29 @@
-import os
-import joblib
 from flask import Flask, render_template, request, jsonify
+import joblib
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__)
 
-# Load model + vectorizer
-model = joblib.load(os.path.join(BASE_DIR, "hate_speech_model.pkl"))
-vectorizer = joblib.load(os.path.join(BASE_DIR, "vectorizer.pkl"))
+# Load trained model and vectorizer
+model = joblib.load("model.pkl")
+vectorizer = joblib.load("vectorizer.pkl")
 
-# Flask app
-app = Flask(__name__, template_folder="templates", static_folder="static")
-
-# Home route → serve index.html
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Predict route → return JSON
 @app.route("/predict", methods=["POST"])
 def predict():
-    data = request.get_json()
-    text = data.get("text", "")
+    data = request.json
+    text = data["text"]
 
-    if not text.strip():
-        return jsonify({"error": "Empty input"}), 400
+    # Transform text and make prediction
+    X = vectorizer.transform([text])
+    prediction = model.predict(X)[0]
 
-    vector = vectorizer.transform([text])
-    prediction = model.predict(vector)[0]
+    # User-friendly result
+    result = "✅ Not Hate Speech" if prediction == 0 else "❌ Hate Speech"
 
-    return jsonify({"prediction": str(prediction)})
+    return jsonify({"result": result})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
