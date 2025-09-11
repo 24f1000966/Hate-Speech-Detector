@@ -54,3 +54,10 @@ app = Flask(
     template_folder="templates",
     static_folder="static"
 )
+@app.route("/")
+def home():
+    return "✅ Hate Speech Detector backend is running!"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
